@@ -1,0 +1,23 @@
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<div id="app">
+  <p v-once>{{ titulo }}</p>
+  <p>{{ saudadacao() }}</p>
+  <a v-bind:href="link" target="_blank">Acesse meu linkedin</a>
+</div>
+
+<script>
+  new Vue({
+    el: "#app",
+    data: {
+      titulo: "Utilizando Vue.js v2",
+      link: "https://www.linkedin.com/in/rodrigo-chagas-98792199/",
+    },
+    methods: {
+      saudadacao() {
+        this.titulo = "Buenos Dias!";
+        return `${this.titulo}`;
+      },
+    },
+  });
+</script>
