@@ -1,0 +1,22 @@
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<div id="app">
+  <input type="text" v-model="titulo" />
+  <p>{{ titulo }}</p>
+  <p>{{ saudadacao() }}</p>
+</div>
+
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      titulo: 'Utilizando Vue.js v2',
+    },
+    methods: {
+      saudadacao() {
+        console.log(this.titulo);
+        return `${this.titulo}`;
+      },
+    },
+  });
+</script>
