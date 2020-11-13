@@ -1,0 +1,61 @@
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<div id="app">
+    <!-- V-MODEL -->
+    <input type="text" v-model="titulo" />
+    <p>{{titulo}}</p>
+
+    <br /><br /><br />
+
+    <!-- COMPUTED -->
+    <button v-on:click="aumentar">Aumentar</button>
+    <button v-on:click="contador2++">Aumentar 2</button>
+    <button v-on:click="diminuir">Diminuir</button>
+    <p>Contador: {{ contador }} | {{ contador2 }}</p>
+    <!-- <p>Resultado: {{ resultado() }}</p> -->
+    <p>Resultado: {{ resultado }}</p>
+</div>
+
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            titulo: "Utilizando Vue.js v2",
+            contador: 0, //Monitorada pelo watch
+            contador2: 0,
+        },
+        computed:{
+            //Computa o dado, só é chamado quando o dado for alterado, não é chamado a todo evento acionado (É Sincrono)
+            //Individualizando/computando - Só é chamado caso o resultado for alterado (No caso isso acontece apenas no primeiro botão)
+            resultado(){
+                //
+                console.log("chamando do computed");
+                return this.contador > 5 ? 'Maior que 5 ':'Menor que 5';
+            },
+        },
+        watch: {
+            // Monitora as alterações de alguma propriedade  (é assincrono) Ex. Combo box de estado e cidade
+            // Deve sempre declarar a propriedade, nesse exemplo é o contador (Método = Mesmo nome da propriedade)
+            // Nesse caso estamos monitorando o valor antigo e novo do contador e zerando depois de 3 segundos
+            contador(novo, antigo){
+                console.log(novo, antigo);
+                setTimeout(()=>{
+                    this.contador = 0;
+                }, 3000)
+            }
+        },
+        methods: {
+            aumentar(){
+                this.contador++;
+            },
+            diminuir(){
+                this.contador--
+            },
+            // Chama em qualquer evento de click atualizando o resultado
+            // resultado(){
+            //     console.log("chamando do methods");
+            //     return this.contador>5?'Maior que 5 ':'Menor que 5';
+            // },
+        },
+    });
+</script>

@@ -1,0 +1,54 @@
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<div id="app">
+    <!-- V-MODEL -->
+    <input type="text" v-model="titulo" />
+    <p>{{titulo}}</p>
+
+    <br /><br /><br />
+
+    <!-- COMPUTED -->
+    <button v-on:click="aumentar">Aumentar</button>
+    <button v-on:click="contador2++">Aumentar 2</button>
+    <button v-on:click="contador3++">Aumentar 3</button>
+    <button v-on:click="diminuir">Diminuir</button>
+    <p>Contador: {{ contador }} | {{ contador2 }}</p>
+    <!-- <p>Resultado: {{ resultado() }}</p> -->
+    <p>Resultado: {{ resultado }}</p>
+</div>
+
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            titulo: "Utilizando Vue.js v2",
+            contador: 0,
+            contador2: 0,
+        },
+        computed:{
+            //Computa o dado, só é chamado quando o dado for alterado, não é chamado a todo evento acionado
+            //Individualizando/computando - Só é chamado caso o resultado for alterado (No caso isso acontece apenas no primeiro botão)
+            resultado(){
+                //
+                console.log("chamando do computed");
+                return this.contador > 5 ? 'Maior que 5 ':'Menor que 5';
+            },
+            contador3(){
+                return this.contador++;
+            },
+        },
+        methods: {
+            aumentar(){
+                this.contador++;
+            },
+            diminuir(){
+                this.contador--
+            },
+            // Chama em qualquer evento de click atualizando o resultado
+            // resultado(){
+            //     console.log("chamando do methods");
+            //     return this.contador>5?'Maior que 5 ':'Menor que 5';
+            // },
+        },
+    });
+</script>

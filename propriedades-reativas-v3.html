@@ -1,0 +1,23 @@
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<div id="example">
+    <p>Mensagem original: "{{ message }}"</p>
+    <p>Mensagem ao contrário: "{{ reversedMessage }}"</p>
+</div>
+
+<script>
+    var vm = new Vue({
+        el: '#example',
+        data: {
+            message: 'Olá Vue'
+        },
+        computed: {
+            // uma função "getter" computada (computed getter)
+            reversedMessage: function () {
+                // `this` aponta para a instância Vue da variável `vm`
+                return this.message.split('').reverse().join('')
+            }
+        }
+    })
+
+</script>
