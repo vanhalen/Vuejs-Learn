@@ -1,0 +1,37 @@
+<meta charset='UTF-8'/>
+<script src='https://cdn.jsdelivr.net/npm/vue/dist/vue.js'></script>
+
+<div id='app'>
+
+    <template v-if='logado'>
+        <p>Usuário Logado: {{ nome }}</p>
+        <p>Tipo Usuário: Admin</p>
+    </template>
+
+    <p v-else-if='anonimo'>Navegando como Anônimo</p>
+    <p v-else>Nunhum usuário logado</p>
+    <hr />
+    <p><input type='checkbox' v-model='anonimo'/> Permitir Anônimo</p>
+    <button @click='logado = !logado'>{{logado?'Sair':'Logar'}}</button>
+    <hr />
+
+    <!-- V-SHOW apenas esconde/mostra o elemento html, utilizando o display:none; (Menos custo de processamento) -->
+    <footer v-show='logado'>
+        Desenvolvido pra você!
+    </footer>
+    <footer v-show='!logado'>
+        Desenvolvido pra você que é desconhecido
+    </footer>
+</div>
+
+
+<script>
+    new Vue({
+        el: '#app',
+        data:{
+            nome: 'Rodrigo',
+            logado: false,
+            anonimo: false,
+        }
+    })
+</script>
