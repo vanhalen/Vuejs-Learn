@@ -26,7 +26,10 @@
                     <div>{{ bolsoLife }}%</div>
                 </div>
             </div>
-            <div class='panel result'></div>
+            <div v-if='hasResult' class='panel result'>
+                <div v-if='bolsoLife<=0' class="win">Você ganhou!!! :)</div>
+                <div v-else class="lose">Você Perdeu! :(</div>
+            </div>
             <div class='panel buttons'></div>
             <div class='panel logs'></div>
         </div>
@@ -38,12 +41,15 @@
         data:{
             playerName: 'Você',
             playerLife: 40,
-            bolsoLife: 100,
+            bolsoLife: 0,
         },
         watch: {
 
         },
         computed:{
+            hasResult(){
+                return this.playerLife === 0 || this.bolsoLife === 0;
+            }
 
         },
         methods: {
@@ -101,5 +107,19 @@ html{
 
 .life-bar .life.danger {
     background-color: red;
+}
+
+.win, .lose{
+    display: flex;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.win {
+    color: green;
+}
+.lose {
+    color: red;
 }
 </style>
