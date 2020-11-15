@@ -4,7 +4,7 @@
     <div class="caixas">
         <div class="demo" :class="estilo1" @click="aplicarCor1 = !aplicarCor1"></div>
         <div class="demo" :class="{'cor-2': aplicarCor2}" @click="aplicarCor2 = !aplicarCor2"></div>
-        <div class="demo" :class="[classeCss, {'girar': aplicarGirar}]"></div>
+        <div class="demo" :class="[classeCss, {girar: aplicarGirar}]"></div>
     </div>
     <hr />
     <input type="text" v-model="classeCss"></input>
