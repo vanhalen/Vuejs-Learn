@@ -3,17 +3,32 @@
     <head>
         <meta charset='UTF-8'/>
         <title>Mate o Bilimanjaro</title>
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+        <link rel='preconnect' href='https://fonts.gstatic.com'>
+        <link href='https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap' rel='stylesheet'>
         <script src='https://cdn.jsdelivr.net/npm/vue/dist/vue.js'></script>
     </head>
 
     <body>
         <div id='app'>
-            <div class="panel scores"></div>
-            <div class="panel result"></div>
-            <div class="panel buttons"></div>
-            <div class="panel logs"></div>
+            <div class='panel scores'>
+                <div class='score'>
+                    <h1>{{ playerName }}</h1>
+                    <div class='life-bar'>
+                        <div class='life' :class='[{danger: playerLife < 20}, {warning: playerLife < 50}]' :style='{width: `${playerLife}%`}'></div>
+                    </div>
+                    <div>{{ playerLife }}%</div>
+                </div>
+                <div class='score'>
+                    <h1>Bolsolixo</h1>
+                    <div class='life-bar'>
+                        <div class='life' :class='[{danger: bolsoLife < 20}, {warning: bolsoLife < 50}]' :style='{width: `${bolsoLife}%`}'></div>
+                    </div>
+                    <div>{{ bolsoLife }}%</div>
+                </div>
+            </div>
+            <div class='panel result'></div>
+            <div class='panel buttons'></div>
+            <div class='panel logs'></div>
         </div>
     </body>
 </html>
@@ -21,7 +36,9 @@
     new Vue({
         el: '#app',
         data:{
-
+            playerName: 'Você',
+            playerLife: 40,
+            bolsoLife: 100,
         },
         watch: {
 
@@ -47,5 +64,42 @@ html{
     margin: 10px;
     padding: 20px;
     box-shadow: 0 2px 10px rgb(0, 0, 0, 0.1);
+}
+
+.scores {
+    display: flex;
+}
+
+.score {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.score h1{
+    font-weight: 300;
+}
+
+.life-bar{
+    width: 80%;
+    height: 20px;
+    border: 1px solid #AAA;
+}
+
+.life-bar .life{
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    background-color: green;
+}
+
+.life-bar .life.warning {
+    background-color: orange;
+}
+
+.life-bar .life.danger {
+    background-color: red;
 }
 </style>
