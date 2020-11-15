@@ -48,10 +48,13 @@
   <h2>#04</h2>
   <ul>
     <li v-for='(valor, chave, index) in aluno'>
-        <span v-if='isArray(valor)'>
-            <div v-for='val in valor'>{{val}}</div>
-        </span>
-        <span v-else>{{valor}}</span>
+        <template v-if='Array.isArray(valor)'>
+            Notas:
+            <ul>
+                <li v-for='val in valor'>{{val}}</li>
+            </ul>
+        </template>
+        <template v-else>{{valor}}</template>
     </li>
   </ul>
 </div>
@@ -72,12 +75,6 @@ new Vue({
 			nome: 'Maria',
 			notas: [7.67, 8.33, 6.98, 9.21]
 		}
-    },
-    methods: {
-        isArray(value){
-            if(Array.isArray(value)) return true;
-            return false;
-        }
     },
 });
 </script>
