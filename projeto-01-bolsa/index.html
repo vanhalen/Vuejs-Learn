@@ -19,7 +19,7 @@
                     <div class='life-bar'>
                         <div class='life' :class='[{danger: playerLife < 20}, {warning: playerLife < 50}]' :style='{width: `${playerLife}%`}'></div>
                     </div>
-                    <div>{{ playerLife }}%</div>
+                    <div class='percentage'>{{ playerLife }}%</div>
                 </div>
                 <div class='score'>
                     <h1>Bolsolixo</h1>
@@ -29,7 +29,7 @@
                     <div class='life-bar'>
                         <div class='life' :class='[{danger: bolsoLife < 20}, {warning: bolsoLife < 50}]' :style='{width: `${bolsoLife}%`}'></div>
                     </div>
-                    <div>{{ bolsoLife }}%</div>
+                    <div class='percentage'>{{ bolsoLife }}%</div>
                 </div>
             </div>
             <div v-if='hasResult' class='panel result'>
@@ -140,6 +140,9 @@
 html{
     font-family: 'Montserrat';
 }
+body{
+    background-color: #88a8d84d;
+}
 #app {
     display: flex;
     flex-direction: column;
@@ -151,6 +154,7 @@ html{
 }
 .scores {
     display: flex;
+    background-image: url('https://i.pinimg.com/originals/ba/35/d7/ba35d7691668ec6c3284e09dc166042c.gif');
 }
 .score {
     flex: 1;
@@ -160,12 +164,19 @@ html{
     align-items: center;
 }
 .score h1{
-    font-weight: 300;
+    font-weight: 600;
+}
+.score h1, .score .percentage{
+    color: rgb(255, 255, 255);
+    background-color: #2222228f;
+    border-radius: 5px;
+    padding: 5px;
 }
 .life-bar{
     width: 80%;
     height: 20px;
     border: 1px solid #AAA;
+    background-color: #00000094;
 }
 .life-bar .life{
     display: flex;
@@ -200,6 +211,7 @@ html{
 }
 .panel.buttons{
     text-align: center;
+    background-color: #60605052;
 }
 .btn{
     display: inline-flex;
