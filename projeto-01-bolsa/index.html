@@ -13,6 +13,9 @@
             <div class='panel scores'>
                 <div class='score'>
                     <h1>{{ playerName }}</h1>
+                    <div class='profile'>
+                        <img src="https://svgsilh.com/svg/307893.svg" alt="Você">
+                    </div>
                     <div class='life-bar'>
                         <div class='life' :class='[{danger: playerLife < 20}, {warning: playerLife < 50}]' :style='{width: `${playerLife}%`}'></div>
                     </div>
@@ -20,6 +23,9 @@
                 </div>
                 <div class='score'>
                     <h1>Bolsolixo</h1>
+                    <div class='profile'>
+                        <img src="https://img.pngio.com/jair-bolsonaro-praying-transparent-png-stickpng-bolsonaro-png-720_405.png" alt="Coisa Rim">
+                    </div>
                     <div class='life-bar'>
                         <div class='life' :class='[{danger: bolsoLife < 20}, {warning: bolsoLife < 50}]' :style='{width: `${bolsoLife}%`}'></div>
                     </div>
@@ -30,7 +36,17 @@
                 <div v-if='bolsoLife<=0' class="win">Você ganhou!!! :)</div>
                 <div v-else class="lose">Você Perdeu! :(</div>
             </div>
-            <div class='panel buttons'></div>
+            <div class='panel buttons'>
+                <template v-if='running'>
+                    <button class="btn attack">Pescotapa</button>
+                    <button class="btn special-attack">Lançar Laranja</button>
+                    <button class="btn heal">Desmentir FakeNews</button>
+                    <button class="btn give-up" @click='finish'>Desistir</button>
+                </template>
+                <template v-else>
+                    <button class="btn new-game" @click='play'>Iniciar Partida</button>
+                </template>
+            </div>
             <div class='panel logs'></div>
         </div>
     </body>
@@ -39,9 +55,10 @@
     new Vue({
         el: '#app',
         data:{
+            running: false,
             playerName: 'Você',
             playerLife: 40,
-            bolsoLife: 0,
+            bolsoLife: 15,
         },
         watch: {
 
@@ -53,7 +70,12 @@
 
         },
         methods: {
-
+            play(){
+                return this.running = true;
+            },
+            finish(){
+                return this.running = false;
+            },
         },
     })
 </script>
@@ -121,5 +143,45 @@ html{
 }
 .lose {
     color: red;
+}
+
+.profile img{
+    width: 150px;
+    height: 100px;
+}
+
+
+.panel.buttons{
+    text-align: center;
+}
+.btn{
+    text-align: center;
+    padding: 5px 10px;
+    margin: 0px 10px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-size: 1.1rem; 
+
+}
+
+.attack{
+    background-color: rgb(58, 58, 214);
+    color: #FFF;
+}
+.special-attack{
+    background-color: rgb(255, 159, 49);
+    color: #FFF;
+}
+.heal{
+    background-color: rgb(28, 168, 40);
+    color: #FFF;
+}
+.give-up{
+    background-color: rgb(168, 44, 28);
+    color: #000;
+}
+.new-game{
+    background-color: rgb(57, 159, 255);
+    color: #FFF;
 }
 </style>
