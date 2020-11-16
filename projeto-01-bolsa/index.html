@@ -33,15 +33,16 @@
                 </div>
             </div>
             <div v-if='hasResult' class='panel result'>
-                <div v-if='bolsoLife<=0' class="win">Você ganhou!!! :)</div>
+                <div v-if='bolsoLife<=0 && playerLife<=0' class="tie">Ops, você empatou :/</div>
+                <div v-else-if='bolsoLife<=0' class="win">Você ganhou!!! :)</div>
                 <div v-else class="lose">Você Perdeu! :(</div>
             </div>
             <div class='panel buttons'>
                 <template v-if='running'>
-                    <button class="btn attack">Pescotapa</button>
-                    <button class="btn special-attack">Lançar Laranja</button>
-                    <button class="btn heal">Desmentir FakeNews</button>
-                    <button class="btn give-up" @click='finish'>Desistir</button>
+                    <button class="btn attack" @click='attack(false)'>Pescotapa</button>
+                    <button class="btn special-attack" @click='attack(true)' :disabled='specialCount>=6'>Lançar Laranja <template v-if='specialCount>0'>({{ specialCount }})</template></button>
+                    <button class="btn heal" @click='healAndHurt' :disabled='healCount>=6'>Desmentir Fake News <template v-if='healCount>0'>({{ healCount }})</template></button>
+                    <button class="btn give-up" @click='giveUp'>Desistir</button>
                 </template>
                 <template v-else>
                     <button class="btn new-game" @click='play'>Iniciar Partida</button>
@@ -57,11 +58,15 @@
         data:{
             running: false,
             playerName: 'Você',
-            playerLife: 40,
-            bolsoLife: 15,
+            playerLife: 100,
+            bolsoLife: 100,
+            specialCount: 0,
+            healCount: 0,
         },
         watch: {
-
+            hasResult(value){
+                if(value) return this.running = false;
+            }
         },
         computed:{
             hasResult(){
@@ -71,10 +76,42 @@
         },
         methods: {
             play(){
+                this.resetLife();
                 return this.running = true;
             },
-            finish(){
+            giveUp(){
+                this.resetLife();
                 return this.running = false;
+            },
+            attack(special){
+                this.hurt('bolsoLife', 5, 10, special);
+                this.hurt('playerLife', 7, 12, false);
+            },
+            hurt(lifeAtr, min, max, special){
+                const plus = special ? 5 && this.specialCount++ : 0;
+                const hurt = this.getRandom(min + plus, max + plus);
+
+                //Math.max para numeros não negativos
+                this[lifeAtr] = Math.max(this[lifeAtr] - hurt, 0);
+            },
+            healAndHurt(){
+                this.heal(10, 15);
+                this.hurt('playerLife', 7, 12, false);
+            },
+            heal(min, max){
+                const heal = this.getRandom(min, max);
+                this.healCount++;
+                this.playerLife = Math.min(this.playerLife + heal, 100);
+            },
+            getRandom(min, max){
+                const val = Math.random() * (max-min) + min;
+                return Math.round(val);
+            },
+            resetLife(){
+                this.specialCount = 0,
+                this.healCount = 0,
+                this.playerLife = 100;
+                this.bolsoLife = 100;
             },
         },
     })
@@ -131,7 +168,7 @@ html{
     background-color: red;
 }
 
-.win, .lose{
+.win, .lose, .tie{
     display: flex;
     justify-content: center;
     font-size: 1.3rem;
@@ -143,6 +180,9 @@ html{
 }
 .lose {
     color: red;
+}
+.tie {
+    color: orange;
 }
 
 .profile img{
@@ -183,5 +223,9 @@ html{
 .new-game{
     background-color: rgb(57, 159, 255);
     color: #FFF;
+}
+
+button:disabled {
+  background: #dddddd;
 }
 </style>
