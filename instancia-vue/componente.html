@@ -1,0 +1,42 @@
+<meta charset="UTF-8" />
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<div id="app">
+    <meu-componente></meu-componente>
+    <meu-componente></meu-componente>
+    <meu-componente></meu-componente>
+</div>
+
+<script>
+
+    Vue.component('meu-componente', {
+        template: `
+            <div class='box'>
+                <h1>{{ titulo }}</h1>
+                <h2>{{ descricao }}</h2>
+                <button @click='alterarTitulo'>Alterar Título</button>
+                <button @click='alterarDescricao'>Alterar Descrição</button>
+            </div>
+        `,
+        //Quando for componente retornar o data em uma função para cada componente ser independente
+        data: () => {
+            return {
+                titulo: 'Meu Título',
+                descricao: 'Minha Descrição',
+            }
+        },
+        methods:{
+            alterarTitulo(){
+                return this.titulo += '#';
+            },
+            alterarDescricao(){
+                return this.descricao += '@';
+            },
+        }
+    });
+
+    new Vue({
+        el: '#app',
+    });
+</script>
