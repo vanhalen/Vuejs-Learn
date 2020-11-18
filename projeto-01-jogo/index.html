@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8'/>
+        <title>Mate o Bilimanjaro</title>
+        <link rel='preconnect' href='https://fonts.gstatic.com'>
+        <link href='https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap' rel='stylesheet'>
+        <script src='https://cdn.jsdelivr.net/npm/vue/dist/vue.js'></script>
+    </head>
+
+    <body>
+        <div id='app'>
+            <div class='panel scores'>
+                <div class='score'>
+                    <h1>{{ playerName }}</h1>
+                    <div class='profile'>
+                        <img src="https://svgsilh.com/svg/307893.svg" alt="Você">
+                    </div>
+                    <div class='life-bar'>
+                        <div class='life' :class='[{danger: playerLife < 20}, {warning: playerLife < 50}]' :style='{width: `${playerLife}%`}'></div>
+                    </div>
+                    <div class='percentage'>{{ playerLife }}%</div>
+                </div>
+                <div class='score'>
+                    <h1>Bolsolixo</h1>
+                    <div class='profile'>
+                        <img src="https://img.pngio.com/jair-bolsonaro-praying-transparent-png-stickpng-bolsonaro-png-720_405.png" alt="Coisa Rim">
+                    </div>
+                    <div class='life-bar'>
+                        <div class='life' :class='[{danger: bolsoLife < 20}, {warning: bolsoLife < 50}]' :style='{width: `${bolsoLife}%`}'></div>
+                    </div>
+                    <div class='percentage'>{{ bolsoLife }}%</div>
+                </div>
+            </div>
+            <div v-if='hasResult' class='panel result'>
+                <div v-if='bolsoLife<=0 && playerLife<=0' class="tie">Ops, você empatou :/</div>
+                <div v-else-if='bolsoLife<=0' class="win">Você ganhou!!! :)</div>
+                <div v-else class="lose">Você Perdeu! :(</div>
+            </div>
+            <div class='panel buttons'>
+                <template v-if='running'>
+                    <button class="btn attack" @click='attack(false)'>Pescotapa</button>
+                    <button class="btn special-attack" @click='attack(true)' :disabled='specialCount>=6'>Lançar Laranja <template v-if='specialCount>0'>({{ specialCount }})</template></button>
+                    <button class="btn heal" @click='healAndHurt' :disabled='healCount>=6'>Desmentir Fake News <template v-if='healCount>0'>({{ healCount }})</template></button>
+                    <button class="btn give-up" @click='giveUp'>Desistir</button>
+                </template>
+                <template v-else>
+                    <button class="btn new-game" @click='play'>Iniciar Partida</button>
+                </template>
+            </div>
+            <div class='panel logs' v-if='logs.length'>
+                <ul>
+                    <li v-for='log in logs' :class='log.css'>{{ log.text }}</li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>
+<script>
+    new Vue({
+        el: '#app',
+        data:{
+            running: false,
+            playerName: 'Você',
+            playerLife: 100,
+            bolsoLife: 100,
+            specialCount: 0,
+            healCount: 0,
+            logs: [],
+        },
+        watch: {
+            hasResult(value){
+                if(value) return this.running = false;
+            }
+        },
+        computed:{
+            hasResult(){
+                return this.playerLife === 0 || this.bolsoLife === 0;
+            }
+
+        },
+        methods: {
+            play(){
+                this.resetLife();
+                return this.running = true;
+            },
+            giveUp(){
+                this.resetLife();
+                return this.running = false;
+            },
+            attack(special){
+                //Não tira vida no primeiro ataque
+                if(this.bolsoLife < 100)
+                    this.hurt('playerLife', 7, 12, false, 'Birolilo', 'Você', 'birolilo');
+                this.hurt('bolsoLife', 5, 10, special, 'Você', 'Birolilo',  'player');
+            },
+            hurt(lifeAtr, min, max, special, source, target, css){
+                const plus = special ? 5 && this.specialCount++ : 0;
+                const hurt = this.getRandom(min + plus, max + plus);
+
+                //Math.max para numeros não negativos
+                this[lifeAtr] = Math.max(this[lifeAtr] - hurt, 0);
+
+                //Registrando Log
+                this.registerLog(`${source} atingiu ${target} com ${hurt}pts`, css);
+            },
+            healAndHurt(){
+                const life = this.heal(10, 15);
+                this.hurt('playerLife', 7, 12, false, 'Birolilo', 'Você', 'birolilo');
+
+                //Registrando Log
+                this.registerLog(`Você se curou com ${life}pts`, 'player');
+            },
+            heal(min, max){
+                const heal = this.getRandom(min, max);
+                this.healCount++;
+                this.playerLife = Math.min(this.playerLife + heal, 100);
+                return heal;
+            },
+            registerLog(text, css){
+                //Unshifit Deixa o ultimo add na primeira posição
+                this.logs.unshift({text, css});
+            },
+            getRandom(min, max){
+                const val = Math.random() * (max-min) + min;
+                return Math.round(val);
+            },
+            resetLife(){
+                this.playerLife = 100;
+                this.bolsoLife = 100;
+                this.specialCount = 0;
+                this.healCount = 0;
+                this.logs = [];
+            },
+        },
+    })
+</script>
+
+<style>
+html{
+    font-family: 'Montserrat';
+}
+body{
+    background-color: #88a8d84d;
+}
+#app {
+    display: flex;
+    flex-direction: column;
+}
+.panel{
+    margin: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgb(0, 0, 0, 0.1);
+}
+.scores {
+    display: flex;
+    background-image: url('https://i.pinimg.com/originals/ba/35/d7/ba35d7691668ec6c3284e09dc166042c.gif');
+}
+.score {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.score h1{
+    font-weight: 600;
+}
+.score h1, .score .percentage{
+    color: rgb(255, 255, 255);
+    background-color: #2222228f;
+    border-radius: 5px;
+    padding: 5px;
+}
+.life-bar{
+    width: 80%;
+    height: 20px;
+    border: 1px solid #AAA;
+    background-color: #00000094;
+}
+.life-bar .life{
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    background-color: green;
+}
+.life-bar .life.warning {
+    background-color: orange;
+}
+.life-bar .life.danger {
+    background-color: red;
+}
+.win, .lose, .tie{
+    display: flex;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+.profile img{
+    width: 150px;
+    height: 100px;
+}
+.panel.buttons{
+    text-align: center;
+    background-color: #60605052;
+}
+.btn{
+    display: inline-flex;
+    justify-content: center;
+    /* min-width: 200px; */
+    padding: 5px 10px;
+    margin: 5px 10px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-size: 1.1rem; 
+
+}
+button:disabled {
+    background: #dddddd;
+}
+.logs ul{
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-transform: uppercase;
+
+}
+.logs ul li{
+    display: flex;
+    justify-content: center;
+    padding: 10px 0px;
+    margin: 4px 0px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-radius: 5px;
+
+}
+.win {
+    color: green;
+    background-color: rgba(0, 251, 0, 0.192);
+}
+.lose {
+    color: red;
+    background-color: rgba(255, 0, 0, 0.192);
+}
+.tie {
+    color: orange;
+    background-color: rgba(255, 166, 0, 0.205);
+}
+.attack{
+    background-color: rgb(58, 58, 214);
+    color: #FFF;
+}
+.new-game{
+    background-color: rgb(57, 159, 255);
+    color: #FFF;
+}
+.special-attack{
+    background-color: rgb(255, 159, 49);
+    color: #FFF;
+}
+.heal{
+    background-color: rgb(28, 168, 40);
+    color: #FFF;
+}
+.give-up{
+    background-color: rgb(168, 44, 28);
+    color: #000;
+}
+.player{
+    background: rgb(67, 163, 99);
+    color: #fff;
+}
+.birolilo{
+    background: rgb(226, 41, 41);
+    color: #fff;
+}
+</style>
