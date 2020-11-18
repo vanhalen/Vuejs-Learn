@@ -1,0 +1,49 @@
+<meta charset="UTF-8" />
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<div id="app1">
+    <h1>{{ titulo }}</h1>
+    <button @click='addTitulo'>Clique Aqui</button>
+</div>
+
+<div id="app2">
+    <h1>{{ titulo }}</h1>,
+    <button @click='addTitulo'>Clique Aqui</button>
+</div>
+
+
+<script>
+    // Aqui temos a possibilidade de alterar as instâncias vue fora do escopo
+    // Só é utilizado caso você utilize outro framework e queira pegar/alterar os valores vue fora da instância
+    // Lembrando que devemos ter cuidado pois como o Vue não foi feito para isso podem ocorrer erros inesperados
+    const vm1 = new Vue({
+        el: '#app1',
+        data:{
+            titulo: 'Instância 1'
+        },
+        methods: {
+            addTitulo(){
+                vm2.titulo += '_@@@_';
+            }
+        },
+    });
+
+    const vm2 = new Vue({
+        el: '#app2',
+        data:{
+            titulo: 'Instância 2'
+        },
+        methods: {
+            addTitulo(){
+                vm1.titulo += '_!!!_';
+            }
+        },
+    });
+
+
+    //Exemplo de alteração fora dos escopos Vue
+    setTimeout(() => {
+        vm1.titulo = 'Titulo Alterado por timeOutJS fora da instância';
+    }, 5000);
+</script>
