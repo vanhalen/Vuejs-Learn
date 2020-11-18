@@ -1,0 +1,42 @@
+<meta charset="UTF-8" />
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<div id="app1">
+    <h1>{{ titulo }}</h1>
+    <button @click='alerta'>Clique Aqui</button>
+</div>
+
+<div id="app2">
+    <h1>{{ titulo }}</h1>,
+    <button @click='alerta'>Clique Aqui</button>
+</div>
+
+
+<script>
+    // Multi isntância é mais utilizada para projetos com outra tecnologia no qual você quer inserir o vue
+    // Caso seu projeto for feito desde o começo com o vue utilize os components ao invés de multipĺas instâncias
+    new Vue({
+        el: '#app1',
+        data:{
+            titulo: 'Instância 1'
+        },
+        methods: {
+            alerta(){
+                alert('Você clicou na botão da instãncia 1');
+            }
+        },
+    });
+
+    new Vue({
+        el: '#app2',
+        data:{
+            titulo: 'Instância 2'
+        },
+        methods: {
+            alerta(){
+                alert('Você clicou na botão da instãncia 2');
+            }
+        },
+    });
+</script>
