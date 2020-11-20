@@ -1,5 +1,6 @@
 <template>
   <div class="contadores">
+    <div>Contadores</div>
     <the-contador />
     <the-Contador />
     <the-contador />

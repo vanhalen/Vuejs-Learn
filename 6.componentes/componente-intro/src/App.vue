@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <the-contadores />
+    <button class="contador">X</button>
   </div>
 </template>
 
