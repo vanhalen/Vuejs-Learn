@@ -1,4 +1,5 @@
 <template>
+  <!-- Esse arquivo todo faz parte do commit -->
   <div class="contador">
     <span>{{ contador }}</span>
     <button @click="adicionar">+</button>
