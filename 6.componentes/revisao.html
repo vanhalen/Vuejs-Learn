@@ -1,0 +1,35 @@
+<meta charset="UTF-8" />
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<div id="app">
+    <The-contador></The-contador>
+    <the-Contador></the-Contador>
+    <THE-CONTADOR></THE-CONTADOR>
+</div>
+
+<script>
+
+    Vue.component('TheContador', {
+        template: `
+            <div class='box'>
+                <h1>{{ contador }}</h1>
+                <button @click='contador++'>+</button>
+                <button @click='contador--'>--</button>
+            </div>
+        `,
+        //Quando for componente retornar o data em uma função para cada componente ser independente
+        data: () => {
+            return {
+                contador: 0,
+            }
+        },
+        methods: {
+
+        }
+    });
+
+    new Vue({
+        el: '#app',
+    });
+</script>
