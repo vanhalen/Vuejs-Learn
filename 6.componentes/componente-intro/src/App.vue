@@ -1,16 +1,11 @@
 <template>
   <div id="app">
-    <h1>Contadores</h1>
-    <the-contador />
-    <the-contador />
+    <the-contadores />
   </div>
 </template>
 
 <script>
-// import TheContador from "./TheContador.vue";
-export default {
-  // components: { TheContador },
-};
+export default {};
 </script>
 
 <style lang="scss"></style>
