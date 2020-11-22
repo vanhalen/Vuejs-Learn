@@ -3,14 +3,31 @@
     <h2>As Informações de Usuário</h2>
     <p>Vários detalhes...</p>
     <p>
-      Nome do usuário: <strong>{{ nome }}</strong>
+      Nome do usuário: <strong>{{ inverterNome() }}</strong>
     </p>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["nome"],
+  props: {
+    // nome: String,
+    // nome: [String, Number],
+    nome: {
+      type: String,
+      required: true,
+      // default: 'Anônimo',
+      // default: () => { return 'Rodrigo' },
+    },
+  },
+  methods: {
+    inverterNome() {
+      return this.nome
+        .split("")
+        .reverse()
+        .join("");
+    },
+  },
 };
 </script>
 
