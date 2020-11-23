@@ -8,7 +8,7 @@
     <button @click="alterarNome">Alterar</button>
     <hr />
     <div class="componentes">
-      <app-usuario-info :nome="nome" />
+      <app-usuario-info :nome="nome" @mudouNome="nome = $event" />
       <app-usuario-editar />
     </div>
   </div>

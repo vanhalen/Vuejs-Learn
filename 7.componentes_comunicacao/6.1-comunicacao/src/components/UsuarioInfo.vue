@@ -5,20 +5,14 @@
     <p>
       Nome do usuário: <strong>{{ inverterNome() }}</strong>
     </p>
+    <button @click="reinicializarNome">Reinicializar Nome</button>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    // nome: String,
-    // nome: [String, Number],
-    nome: {
-      type: String,
-      required: true,
-      // default: 'Anônimo',
-      // default: () => { return 'Rodrigo' },
-    },
+    nome: String,
   },
   methods: {
     inverterNome() {
@@ -26,6 +20,10 @@ export default {
         .split("")
         .reverse()
         .join("");
+    },
+    reinicializarNome() {
+      // this.nome = "Ana";
+      this.$emit("mudouNome", "Ana");
     },
   },
 };
