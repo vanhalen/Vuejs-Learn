@@ -3,7 +3,7 @@
     <!-- Aqui posso colocar qualquer coisa, div, spal, p, e o SLOT é o html que vem do filho -->
     <slot name="autor"></slot>
     <slot name="texto"></slot>
-    <slot name="fonte"></slot>
+    <slot class="fonte" name="fonte"></slot>
   </div>
 </template>
 
@@ -23,6 +23,10 @@ export default {
   background-color: rgba(0, 0, 0, 0.1);
   padding: 25px;
   max-width: 450px;
+}
+.fonte {
+  float: right;
+  font-size: 1rem;
 }
 h1 {
   color: rgb(83, 10, 10);

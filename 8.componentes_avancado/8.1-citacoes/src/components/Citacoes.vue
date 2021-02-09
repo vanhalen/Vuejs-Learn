@@ -3,7 +3,7 @@
     <citacao>
       <h1 slot="autor">{{citacoes[indice].autor}}</h1>
       <p slot="texto">{{citacoes[indice].texto}}</p>
-      <h6 slot="fonte">{{citacoes[indice].fonte}}</h6>
+      <div class="fonte" slot="fonte">{{citacoes[indice].fonte}}</div>
     </citacao>
     <span>
       <button @click="numero--">&lt;</button>
@@ -54,7 +54,7 @@ export default {
   align-items: center;
 }
 
-h6 {
+.fonte {
   color: rgb(245, 151, 0);
 }
 </style>
