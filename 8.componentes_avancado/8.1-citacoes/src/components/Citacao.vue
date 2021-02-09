@@ -1,7 +1,9 @@
 <template>
   <div class="citacao">
     <!-- Aqui posso colocar qualquer coisa, div, spal, p, e o SLOT é o html que vem do filho -->
-    <slot></slot>
+    <slot name="autor"></slot>
+    <slot name="texto"></slot>
+    <slot name="fonte"></slot>
   </div>
 </template>
 
