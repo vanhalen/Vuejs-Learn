@@ -9,11 +9,7 @@
 
 <script>
 export default {
-  props: {
-    // fonte: String,
-    // texto: String,
-    // autor: String,
-  },
+
 };
 </script>
 
