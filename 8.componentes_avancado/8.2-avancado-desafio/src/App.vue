@@ -6,9 +6,9 @@
 			<button @click="componente='Azul'" class="azul">Carregar Componente Azul</button>
 		</span>
 			<component :is="componente">
-				<span slot="vermelho">Aqui é o meu conteúdo <strong>VERMELHO</strong></span>
-				<span slot="verde">Aqui é o meu conteúdo <strong>VERDE</strong></span>
-				<span slot="azul">Aqui é o meu conteúdo <strong>AZUL</strong></span>
+				<span slot="vermelho">Aqui é o meu conteúdo <strong>{{componente}}</strong></span>
+				<span slot="verde">Aqui é o meu conteúdo <strong>{{componente}}</strong></span>
+				<span slot="azul">Aqui é o meu conteúdo <strong>{{componente}}</strong></span>
 			</component>
 	</div>
 </template>
