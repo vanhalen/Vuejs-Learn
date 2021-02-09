@@ -1,10 +1,10 @@
 <template>
   <div class="citacoes">
-    <citacao
-      :fonte="citacoes[indice].fonte"
-      :texto="citacoes[indice].texto"
-      :autor="citacoes[indice].autor"
-    />
+    <citacao>
+      <h1>{{citacoes[indice].autor}}</h1>
+      <p>{{citacoes[indice].texto}}</p>
+      <h6>{{citacoes[indice].fonte}}</h6>
+    </citacao>
     <span>
       <button @click="numero--">&lt;</button>
       <button @click="numero++">&gt;</button>
@@ -52,5 +52,9 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+h6 {
+  color: rgb(245, 151, 0);
 }
 </style>
